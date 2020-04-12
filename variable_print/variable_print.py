@@ -17,7 +17,13 @@ def variable_print(line_by_line=False, to_file=False, full_output=False):
     return wrapper
 
 class debug_context():
-    """ Debug context to trace any function calls inside the context """
+    """ 
+    Debug context to trace any function calls inside the context manager.
+    :param function_name: str, needed to grab the correct trace calls
+    :param line_by_line: bool, if True it gives the variable values at each call
+    :param to_file: bool, if True it writes results to a file
+    :param full_output: bool, if True it writes line by line trace to file
+    """
 
     def __init__(self, function_name, line_by_line=False, to_file=False, full_output=False):
         self.name = function_name
