@@ -9,7 +9,7 @@ import sys
 def variable_print(line_by_line=False, to_file=False, full_output=False):
     def wrapper(func):  
         def wrapped_wrapper(*args, **kwargs):
-            with debug_context(func.__name__):
+            with debug_context(func.__name__, line_by_line, to_file, full_output):
                 return_value = func(*args, **kwargs)
             return return_value
             print(locals())

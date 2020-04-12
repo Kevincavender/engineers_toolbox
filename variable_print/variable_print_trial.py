@@ -6,7 +6,7 @@ Author: Severn Anderson
 
 from variable_print import variable_print
 
-@variable_print(True, True, False)
+@variable_print(False, True, False)
 def variable_print_trial(a, b, c):
     a = 10
     b= 15

@@ -1,9 +1,7 @@
 Start Output: 
-In variable_print_trial on line 11 locals: {'a': 11, 'b': 16, 'c': 21}
-In variable_print_trial on line 12 locals: {'a': 10, 'b': 16, 'c': 21}
-In variable_print_trial on line 13 locals: {'a': 10, 'b': 15, 'c': 21}
-In variable_print_trial on line 14 locals: {'a': 10, 'b': 15, 'c': 20}
-In variable_print_trial on line 16 locals: {'a': 10, 'b': 15, 'c': 20, 'd': 90}
-In variable_print_trial on line 21 locals: {'a': 10, 'b': 15, 'c': 20, 'd': 90, 'inner_func': <function variable_print_trial.<locals>.inner_func at 0x01442BB8>}
-In variable_print_trial on line 23 locals: {'a': 10, 'b': 15, 'c': 20, 'd': 90, 'inner_func': <function variable_print_trial.<locals>.inner_func at 0x01442BB8>, 'z': 26}
-In variable_print_trial on return 23 locals: {'a': 10, 'b': 15, 'c': 20, 'd': 90, 'inner_func': <function variable_print_trial.<locals>.inner_func at 0x01442BB8>, 'z': 26}
+a = 10
+b = 15
+c = 20
+d = 90
+inner_func is a callable function
+z = 26
