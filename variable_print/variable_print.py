@@ -6,24 +6,29 @@ Author: Severn Anderson
 
 import sys
 
-def variable_print(func):
-    def wrapper(*args, **kwargs):
-        print("Something is happening before the function is called.")
-        with debug_context(func.__name__):
-            return_value = func(*args, **kwargs)
-        return return_value
-        print(locals())
+def variable_print(line_by_line=False, to_file=False, full_output=False):
+    def wrapper(func):  
+        def wrapped_wrapper(*args, **kwargs):
+            with debug_context(func.__name__):
+                return_value = func(*args, **kwargs)
+            return return_value
+            print(locals())
+        return wrapped_wrapper
     return wrapper
 
 class debug_context():
     """ Debug context to trace any function calls inside the context """
 
-    def __init__(self, name):
-        self.name = name
+    def __init__(self, function_name, line_by_line=False, to_file=False, full_output=False):
+        self.name = function_name
         self.line_logs = []
+        self.line_by_line = line_by_line
+        self.full_output = []
+        self.full_detail = full_output
+        self.to_file = to_file
 
     def __enter__(self):
-        print('Entering Debug Decorated func')
+        print('Starting Decorated Function')
         # Set the trace function to the trace_calls function
         # So all events are now traced
         sys.settrace(self.trace_calls)
@@ -55,7 +60,13 @@ class debug_context():
         line_no = frame.f_lineno
         filename = co.co_filename
         local_vars = frame.f_locals
-        print ('  {0} {1} {2} locals: {3}'.format(func_name, event, line_no, local_vars))
+        
+        output_string = f'In {func_name} on {event} {line_no} locals: {local_vars}' 
+        self.full_output.append(output_string + "\n")
+        if self.line_by_line:
+            print (output_string)
+            
+        
         self.line_logs.append(local_vars)
         
     def variable_analyasis(self):
@@ -66,13 +77,18 @@ class debug_context():
             if callable(value):
                 line = f"{key} is a callable function"
             else:
-                line = f"{key} ends at {value}"
-
+                line = f"{key} = {value}"
+            
             print(line)
             write_log.append(line + "\n")
 
-        with open(f"{self.name}_variables.txt", "w+") as var_txt:
-            var_txt.writelines(write_log)
+        if self.to_file:
+            with open(f"{self.name}_variables.txt", "w+") as var_txt:
+                var_txt.write("Start Output: \n")
+                if self.full_detail:
+                    var_txt.writelines(self.full_output)
+                else:
+                    var_txt.writelines(write_log)
 
             
 
